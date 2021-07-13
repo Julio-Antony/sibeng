@@ -25,9 +25,8 @@ class Product extends CI_Controller
             $row[] = $item->category_name;
             $row[] = indo_currency($item->price);
             $row[] = $item->stock;
-            // $row[] = '<a href="' . site_url('product/edit_item/' . $item->item_id) . '" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i> Update</a>
-            //         <a href="' . site_url('product/delete_item/' . $item->item_id) . '" onclick="return confirm(\'Yakin hapus data?\')"  class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Delete</a>';
-            $row[] = '<a href="' . site_url('product/delete_item/' . $item->item_id) . '" onclick="return confirm(\'Yakin hapus data?\')"  class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Delete</a>';
+            $row[] = '<a href="' . site_url('product/edit_item/' . $item->item_id) . '" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i> Update</a>
+                   <a href="' . site_url('product/delete_item/' . $item->item_id) . '" onclick="return confirm(\'Yakin hapus data?\')"  class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Delete</a>';
 
             $row[] = $item->unit_name;
             // add html for action
@@ -178,19 +177,14 @@ class Product extends CI_Controller
     {
         $item = new stdClass();
         $item->item_id = null;
-        $item->image = null;
         $item->barcode = null;
         $item->item_name = null;
         $item->price = null;
+        $item->category_id = null;
 
         $query_category = $this->model_product->get_category();
+
         $query_unit = $this->model_product->get_unit();
-
-        $kategori['null'] = '- Choose Category -';
-        foreach ($query_category->result() as $ktg) {
-            $kategori[$ktg->category_id] = $ktg->category_name;
-        }
-
         $satuan['null'] = '- Choose Unit -';
         foreach ($query_unit->result() as $unt) {
             $satuan[$unt->unit_id] = $unt->unit_name;
@@ -200,7 +194,7 @@ class Product extends CI_Controller
             'page' => 'add',
             'title' => 'POS - Add Product',
             'row' => $item,
-            'category' => $kategori, 'selectedcategory' => null,
+            'category' => $query_category,
             'unit' => $satuan, 'selectedunit' => null,
         );
 

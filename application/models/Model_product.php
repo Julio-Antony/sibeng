@@ -142,7 +142,7 @@ class Model_product extends CI_Model
         $params = [
             'barcode' => $post['barcode'],
             'item_name' => $post['item_name'],
-            'category_id' => $post['category_id'],
+            'category_id' => $post['category'],
             'unit_id' => $post['unit_id'],
             'price' => $post['price'],
             'image' => $post['image']

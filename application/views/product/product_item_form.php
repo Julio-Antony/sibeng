@@ -21,27 +21,6 @@
                 <div class="tab-pane" id="settings">
                     <?= form_open_multipart('product/process_item') ?>
                     <div class="form-group row">
-                        <label for="image" class="col-sm-2 col-form-label">image</label>
-                        <div class="col-sm-10">
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <?php if ($page == 'edit') {
-                                        if ($row->image != null) { ?>
-                                            <img src="<?= base_url('assets/dist/img/product/' . $row->image) ?>" class="img-thumbnail mb-2">
-                                    <?php }
-                                    }
-                                    ?>
-                                </div>
-                                <div class="col-sm-9">
-                                    <div class="custom-file">
-                                        <input type="file" class="form-control" id="image" name="image">
-                                        <label class="custom-file-label" for="image">Choose file</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group row">
                         <label for="barcode" class="col-sm-2 col-form-label">Barcode</label>
                         <div class="col-sm-10">
                             <input type="hidden" name="id" value="<?= $row->item_id ?>">
@@ -81,6 +60,19 @@
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="price" name="price" value="<?= $row->price ?>" placeholder="Price" required>
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Image</label>
+                        <?php if ($page == 'edit') {
+                            if ($row->image != null) { ?>
+                                <div style="margin-bottom:5px">
+                                    <img src="<?= base_url('assets/dist/img/product/' . $row->image) ?>" style="width:80%">
+                                </div>
+                        <?php
+                            }
+                        } ?>
+                        <input type="file" name="image" class="form-control">
+                        <small>(Biarkan kosong jika tidak <?= $page == 'edit' ? 'diganti' : 'ada' ?>)</small>
                     </div>
                     <div class="form-group row ">
                         <div class="offset-sm-2 col-sm-10">

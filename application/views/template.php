@@ -266,7 +266,7 @@
 
         <!-- Main Footer -->
         <footer class="main-footer">
-            <strong>Copyright &copy; <?= date('Y'); ?>
+            <strong>Copyright &copy; Julio Antony <?= date('Y'); ?>
         </footer>
     </div>
     <!-- ./wrapper -->

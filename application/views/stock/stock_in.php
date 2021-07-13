@@ -121,7 +121,7 @@
             var supplier_name = $(this).data('supplier_name');
             var qty = $(this).data('qty');
             var date = $(this).data('date');
-            $('#image').prop('src', 'assets/dist/img/product/' + image);
+            $('#image').attr('src', '<?php echo base_url() ?>assets/dist/img/product/' + image);
             $('#barcode').text(barcode);
             $('#item_name').text(item_name);
             $('#detail').text(detail);
