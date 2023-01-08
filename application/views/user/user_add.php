@@ -6,7 +6,7 @@
                 <h1 class="m-0 text-dark">Add User</h1>
             </div><!-- /.col -->
             <div class="offset-sm-5 col-sm-1">
-                <a href="<?= site_url('user/list') ?>" class="btn btn-info">Back</a>
+                <a href="<?= site_url('user/list') ?>" class="btn btn-danger">Back</a>
             </div><!-- /.col -->
         </div><!-- /.row -->
     </div><!-- /.container-fluid -->
@@ -20,7 +20,7 @@
                 <div class="tab-pane" id="settings">
                     <form class="form-horizontal" action="" method="POST">
                         <div class="form-group row">
-                            <label for="inputName" class="col-sm-2 col-form-label">Name</label>
+                            <label for="inputName" class="col-sm-2 col-form-label">Nama</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control <?= form_error('name') ? 'is-invalid' : null ?>" name="name" value="<?= set_value('name') ?>" placeholder="Name">
                                 <?= form_error('name', '<p class="text-danger">', '</p>') ?>
@@ -41,14 +41,14 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputName2" class="col-sm-2 col-form-label">Confirm Password</label>
+                            <label for="inputName2" class="col-sm-2 col-form-label">Konfirmasi Password</label>
                             <div class="col-sm-10">
                                 <input type="password" class="form-control <?= form_error('password2') ? 'is-invalid' : null ?>" name="password2" placeholder="Confirm Password">
                                 <?= form_error('password2', '<p class="text-danger">', '</p>') ?>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputAddress" class="col-sm-2 col-form-label">Address</label>
+                            <label for="inputAddress" class="col-sm-2 col-form-label">Alamat</label>
                             <div class="col-sm-10">
                                 <textarea class="form-control <?= form_error('address') ? 'is-invalid' : null ?>" name="address" value="<?= set_value('address') ?>" placeholder="Address"></textarea>
                                 <?= form_error('address', '<p class="text-danger">', '</p>') ?>
@@ -67,8 +67,8 @@
                         </div>
                         <div class="form-group row ">
                             <div class="offset-sm-2 col-sm-10">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                                <button type="reset" class="btn btn-warning">reset</button>
+                                <button type="submit" class="btn btn-danger">Submit</button>
+                                <button type="reset" class="btn btn-dark">reset</button>
                             </div>
                         </div>
                     </form>

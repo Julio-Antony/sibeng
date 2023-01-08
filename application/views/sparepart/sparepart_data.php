@@ -3,7 +3,10 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Data Supplier</h1>
+                <h1 class="m-0 text-dark">product data</h1>
+            </div>
+            <div class="col-sm-4 offset-sm-2">
+                <?php $this->view('message') ?>
             </div><!-- /.col -->
         </div><!-- /.row -->
     </div><!-- /.container-fluid -->
@@ -16,11 +19,11 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header bg-dark">
-                        <h3 class="card-title">Daftar Supplier</h3>
+                        <h3 class="card-title">product item</h3>
                         <div class="float-right">
-                            <a href="<?= site_url('supplier/add') ?>" class="btn btn-danger btn-flat btn-sm">
-                                <i class="fa fa-user-plus"></i>
-                                Tambah Supplier
+                            <a href="<?= site_url('sparepart/add') ?>" class="btn btn-danger btn-flat btn-sm">
+                                <i class="fa fa-plus"></i>
+                                Tambah Sparepart
                             </a>
                         </div>
                     </div>
@@ -29,14 +32,13 @@
                         <table class="table table-bordered text-center" id="table-1">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Nama</th>
-                                    <th>No. HP</th>
-                                    <th>Alamat</th>
-                                    <th>Deskripsi</th>
-                                    <th>Dibuat</th>
-                                    <th>Diperbarui</th>
-                                    <th>Aksi</th>
+                                    <th>No.</th>
+                                    <th>Image</th>
+                                    <th>Part Number</th>
+                                    <th>Name</th>
+                                    <th>Price</th>
+                                    <th>stock</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -44,18 +46,21 @@
                                 foreach ($row->result() as $key => $data) { ?>
                                     <tr>
                                         <td><?= $no++ ?>.</td>
-                                        <td><?= $data->supplier_name ?></td>
-                                        <td><?= $data->phone ?></td>
-                                        <td><?= $data->address ?></td>
-                                        <td><?= $data->description ?></td>
-                                        <td><?= $data->created ?></td>
-                                        <td><?= $data->updated ?></td>
                                         <td>
-                                            <a href="<?= site_url('supplier/edit/' . $data->supplier_id) ?>" class="btn btn-success btn-flat btn-xs">
+                                            <?php if ($data->image != null) { ?>
+                                                <img src="<?= base_url('assets/dist/img/sparepart/' . $data->image) ?>" width="45" height="45">
+                                            <?php } ?>
+                                        </td>
+                                        <td><?= $data->part_number ?></td>
+                                        <td><?= $data->sparepart_name ?></td>
+                                        <td><?= $data->price ?></td>
+                                        <td><?= $data->stock ?></td>
+                                        <td>
+                                            <a href="<?= site_url('sparepart/edit/' . $data->sparepart_id) ?>" class="btn btn-success btn-flat btn-xs">
                                                 <i class="fas fa-pencil-alt"></i>
                                                 Edit
                                             </a>
-                                            <a href="<?= site_url('supplier/delete/' . $data->supplier_id) ?>" onclick="return confirm('yakin hapus data?')" class="btn btn-danger btn-flat btn-xs">
+                                            <a href="<?= site_url('sparepart/delete/' . $data->sparepart_id) ?>" onclick="return confirm('yakin hapus data?')" class="btn btn-danger btn-flat btn-xs">
                                                 <i class="fas fa-trash"></i>
                                                 Delete
                                             </a>

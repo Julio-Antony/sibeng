@@ -16,20 +16,19 @@
     <link rel="stylesheet" href="<?= base_url() ?>assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="<?= base_url() ?>assets/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="<?= base_url() ?>assets/dist/css/style.css">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     <!-- Website icon -->
     <link href="<?= base_url('assets/dist/img/logo.png'); ?>" rel="shortcut icon">
 </head>
 
-<body class="hold-transition login-page">
-    <div class="login-box bg-success" style="border-radius: 15%;">
-        <div class="login-logo">
-            <img src="<?= base_url('assets/dist/img/seafood_enakk.png') ?>" alt="" height="50">
+<body class="hold-transition login-page" style="background: url('assets/dist/img/bg-login.jpg'); background-size:cover;">
+    <h1 class="loginHeader">Aryosjo Motor</h1>
+    <div class="loginBox text-center bg-dark mx-0">
+        <div class="loginLogo">
+            <img src="<?= base_url('assets/dist/img/panel-logo.png') ?>" alt="" height="100">
         </div>
-        <!-- /.login-logo -->
-        <!-- <div class="card"> -->
-        <!-- <div class="card-body login-card-body"> -->
         <p class="login-box-msg">Sign in to start cashier</p>
 
         <form action="<?= site_url('auth/login') ?>" method="post" class="pl-4 pr-4">
@@ -60,7 +59,7 @@
                 </div> -->
                 <!-- /.col -->
                 <div class="col-4 offset-md-4 mb-4">
-                    <button type="submit" name="login" class="btn btn-primary btn-block">Sign In</button>
+                    <button type="submit" name="login" class="btn btn-danger btn-block">Sign In</button>
                 </div>
                 <!-- /.col -->
             </div>

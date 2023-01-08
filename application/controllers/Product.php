@@ -6,7 +6,6 @@ class Product extends CI_Controller
     {
         parent::__construct();
         check_not_login();
-        check_admin();
         $this->load->model('model_product');
     }
 
@@ -298,7 +297,7 @@ class Product extends CI_Controller
                     if ($this->db->affected_rows() > 0) {
                         $this->session->set_flashdata('success', 'Data berhasil disimpan');
                     }
-                    redirect('product/edit_item');
+                    redirect('product/item');
                 }
             }
         }

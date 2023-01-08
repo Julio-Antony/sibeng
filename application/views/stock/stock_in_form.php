@@ -6,7 +6,7 @@
                 <h1 class="m-0 text-dark"> Stock</h1>
             </div><!-- /.col -->
             <div class="offset-sm-5 col-sm-1">
-                <a href="<?= site_url('stock/stock_in_data') ?>" class="btn btn-info">Back</a>
+                <a href="<?= site_url('stock/stock_in_data') ?>" class="btn btn-danger">Kembali</a>
             </div><!-- /.col -->
         </div><!-- /.row -->
     </div><!-- /.container-fluid -->
@@ -21,19 +21,19 @@
                 <div class="tab-pane" id="settings">
                     <form class="form-horizontal" action="<?= site_url('stock/process') ?>" method="POST">
                         <div class="form-group row">
-                            <label for="date" class="col-sm-2 col-form-label">Date</label>
+                            <label for="date" class="col-sm-2 col-form-label">Tanggal</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="date" name="date" value="<?= date('Y-m-d') ?>" required>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="barcode" class="col-sm-2 col-form-label">Barcode</label>
+                            <label for="part_number" class="col-sm-2 col-form-label">Part Number</label>
                             <div class="col-sm-10">
                                 <div class="input-group">
-                                    <input type="hidden" name="item_id" id="item_id">
-                                    <input type="text" class="form-control" id="barcode" name="barcode" required>
+                                    <input type="hidden" name="sparepart_id" id="sparepart_id">
+                                    <input type="text" class="form-control" id="part_number" name="part_number" required>
                                     <div class="input-group-append">
-                                        <button type="button" class="btn btn-info " data-toggle="modal" data-target="#modal-item">
+                                        <button type="button" class="btn btn-danger " data-toggle="modal" data-target="#modal-item">
                                             <i class="fa fa-search"></i>
                                         </button>
                                     </div>
@@ -41,19 +41,13 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="item_name" class="col-sm-2 col-form-label">Item Name</label>
+                            <label for="sparepart_name" class="col-sm-2 col-form-label">Nama Sparepart</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="item_name" name="item_name" readonly>
+                                <input type="text" class="form-control" id="sparepart_name" name="sparepart_name" readonly>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="unit_name" class="col-sm-2 col-form-label">Item Unit</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="unit_name" name="unit_name" readonly>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="initial_stock" class="col-sm-2 col-form-label">Initial Stock</label>
+                            <label for="initial_stock" class="col-sm-2 col-form-label">Stok Awal</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="initial_stock" name="initial_stock" readonly>
                             </div>
@@ -84,8 +78,8 @@
                 </div>
                 <div class="form-group row ">
                     <div class="offset-sm-2 col-sm-10">
-                        <button type="submit" name="in_add" class="btn btn-primary">Submit</button>
-                        <button type="reset" class="btn btn-warning">reset</button>
+                        <button type="submit" name="in_add" class="btn btn-danger">Submit</button>
+                        <button type="reset" class="btn btn-dark">reset</button>
                     </div>
                 </div>
                 </form>
@@ -100,7 +94,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Select Product Item</h4>
+                <h4 class="modal-title">Pilih Sparepart</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -109,25 +103,23 @@
                 <table class="table table-bordered table-strped text-xs" id="table-1">
                     <thead>
                         <tr>
-                            <th>Barcode</th>
-                            <th>Name</th>
-                            <th>Unit</th>
-                            <th>Price</th>
+                            <th>Part Number</th>
+                            <th>Nama</th>
+                            <th>Harga</th>
                             <th>Stock</th>
-                            <th>Actions</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach ($item as $i => $data) {  ?>
                             <tr>
-                                <td><?= $data->barcode ?></td>
-                                <td><?= $data->item_name ?></td>
-                                <td><?= $data->unit_name ?></td>
+                                <td><?= $data->part_number ?></td>
+                                <td><?= $data->sparepart_name ?></td>
                                 <td><?= indo_currency($data->price) ?></td>
                                 <td><?= $data->stock ?></td>
                                 <td>
-                                    <button class="btn btn-primary btn-xs" id="select" data-id="<?= $data->item_id ?>" data-barcode="<?= $data->barcode ?>" data-item_name="<?= $data->item_name ?>" data-unit_name="<?= $data->unit_name ?>" data-stock="<?= $data->stock ?>">
-                                        <i class="fa fa-check"></i> Select
+                                    <button class="btn btn-danger btn-xs" id="select" data-id="<?= $data->sparepart_id ?>" data-part_number="<?= $data->part_number ?>" data-sparepart_name="<?= $data->sparepart_name ?>" data-stock="<?= $data->stock ?>">
+                                        <i class="fa fa-check"></i> Pilih
                                     </button>
                                 </td>
                             </tr>
@@ -142,15 +134,14 @@
 <script>
     $(document).ready(function() {
         $(document).on('click', '#select', function() {
-            var item_id = $(this).data('id');
-            var barcode = $(this).data('barcode');
-            var item_name = $(this).data('item_name');
+            var sparepart_id = $(this).data('id');
+            var part_number = $(this).data('part_number');
+            var sparepart_name = $(this).data('sparepart_name');
             var unit_name = $(this).data('unit_name');
             var stock = $(this).data('stock');
-            $('#item_id').val(item_id);
-            $('#barcode').val(barcode);
-            $('#item_name').val(item_name);
-            $('#unit_name').val(unit_name);
+            $('#sparepart_id').val(sparepart_id);
+            $('#part_number').val(part_number);
+            $('#sparepart_name').val(sparepart_name);
             $('#initial_stock').val(stock);
             $('#modal-item').modal('hide');
         })

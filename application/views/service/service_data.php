@@ -3,7 +3,10 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Data Supplier</h1>
+                <h1 class="m-0 text-dark">Data Service</h1>
+            </div>
+            <div class="col-sm-4 offset-sm-2">
+                <?php $this->view('message') ?>
             </div><!-- /.col -->
         </div><!-- /.row -->
     </div><!-- /.container-fluid -->
@@ -16,11 +19,11 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header bg-dark">
-                        <h3 class="card-title">Daftar Supplier</h3>
+                        <h3 class="card-title">Daftar Service</h3>
                         <div class="float-right">
-                            <a href="<?= site_url('supplier/add') ?>" class="btn btn-danger btn-flat btn-sm">
-                                <i class="fa fa-user-plus"></i>
-                                Tambah Supplier
+                            <a href="<?= site_url('service/add') ?>" class="btn btn-danger btn-flat btn-sm">
+                                <i class="fa fa-plus"></i>
+                                Tambah SerVice
                             </a>
                         </div>
                     </div>
@@ -29,11 +32,9 @@
                         <table class="table table-bordered text-center" id="table-1">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>No.</th>
                                     <th>Nama</th>
-                                    <th>No. HP</th>
-                                    <th>Alamat</th>
-                                    <th>Deskripsi</th>
+                                    <th>Harga</th>
                                     <th>Dibuat</th>
                                     <th>Diperbarui</th>
                                     <th>Aksi</th>
@@ -44,20 +45,18 @@
                                 foreach ($row->result() as $key => $data) { ?>
                                     <tr>
                                         <td><?= $no++ ?>.</td>
-                                        <td><?= $data->supplier_name ?></td>
-                                        <td><?= $data->phone ?></td>
-                                        <td><?= $data->address ?></td>
-                                        <td><?= $data->description ?></td>
+                                        <td><?= $data->service_name ?></td>
+                                        <td><?= $data->price ?></td>
                                         <td><?= $data->created ?></td>
                                         <td><?= $data->updated ?></td>
                                         <td>
-                                            <a href="<?= site_url('supplier/edit/' . $data->supplier_id) ?>" class="btn btn-success btn-flat btn-xs">
+                                            <a href="<?= site_url('service/edit/' . $data->service_id) ?>" class="btn btn-success btn-flat btn-xs">
                                                 <i class="fas fa-pencil-alt"></i>
-                                                Edit
+                                                Sunting
                                             </a>
-                                            <a href="<?= site_url('supplier/delete/' . $data->supplier_id) ?>" onclick="return confirm('yakin hapus data?')" class="btn btn-danger btn-flat btn-xs">
+                                            <a href="<?= site_url('service/delete/' . $data->service_id) ?>" onclick="return confirm('yakin hapus data?')" class="btn btn-danger btn-flat btn-xs">
                                                 <i class="fas fa-trash"></i>
-                                                Delete
+                                                Hapus
                                             </a>
                                         </td>
                                     </tr>

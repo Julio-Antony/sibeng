@@ -1,0 +1,28 @@
+.loginHeader {
+    color: #ffffff;
+    margin-top: 10%;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.loginBox {
+    width: 360px;
+    border-radius: 15px;
+}
+
+.loginLogo {
+    font-size: 2.1rem;
+    font-weight: 300;
+    margin-top: 1rem;
+    margin-bottom: .9rem;
+    text-align: center;
+}
+
+@media (max-width: 576px) {
+    .loginBox,
+    .register-box {
+      margin-top: .5rem;
+      width: 90%;
+    }
+  }

@@ -27,7 +27,7 @@
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
     <div class="wrapper">
         <!-- Navbar -->
-        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <nav class="main-header navbar navbar-expand navbar-dark navbar-dark">
             <!-- Left navbar links -->
             <ul class="navbar-nav">
                 <li class="nav-item">
@@ -44,7 +44,7 @@
                     </a>
                     <!-- Dropdown - User Information -->
                     <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item" href="<?= site_url('user/profile') ?>">
                             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                             My Profile
                         </a>
@@ -60,16 +60,16 @@
         <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
-        <aside class="main-sidebar bg-success disabled color-palette elevation-4">
+        <aside class="main-sidebar sidebar-dark-danger disabled color-palette elevation-4">
             <!-- Brand Logo -->
-            <a href="#" class="brand-link pl-4">
-                <span class="brand-text text-center font-weight-light">SEAFOOD <small>ENAK</small> </span>
+            <a href="#" class="brand-link text-center">
+                <img src="<?= base_url('assets/dist/img/panel-logo.png') ?>" alt="" height="100">
             </a>
 
             <!-- Sidebar -->
             <div class="sidebar">
                 <!-- Sidebar user panel (optional) -->
-                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex" style="margin-top: 80px !important;">
                     <div class="image">
                         <img src="<?= base_url('/assets/dist/img/') . $this->fungsi->user_login()->image ?>" class="img-circle elevation-2" alt="User Image">
                     </div>
@@ -84,171 +84,86 @@
                         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                         <?php if ($this->fungsi->user_login()->level == 1) { ?>
-                            <li class="nav-item has-treeview <?= $this->uri->segment(1) == 'dashboard' ? 'menu-open' : '' ?>">
-                                <a href="#" class="nav-link <?= $this->uri->segment(1) == 'dashboard' ? 'active' : '' ?> text-light">
-                                    <i class="nav-icon fas fa-users-cog"></i>
+                            <li class="nav-item">
+                                <a href="<?= site_url('dashboard') ?>" class="nav-link <?= $this->uri->segment(1) == 'dashboard' ? 'active' : '' ?> text-light">
+                                    <i class="nav-icon fas fa-tachometer-alt"></i>
                                     <p>
-                                        Admin
-                                        <i class="fas fa-angle-left right"></i>
+                                        Dashboard
                                     </p>
                                 </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="<?= site_url('dashboard') ?>" class="nav-link <?= $this->uri->segment(1) == 'dashboard' ? 'active' : '' ?> text-light">
-                                            <i class="far fa-circle"></i>
-                                            <p>Dashboard</p>
-                                        </a>
-                                    </li>
-                                </ul>
                             </li>
                         <?php } ?>
-                        <li class="nav-item has-treeview <?= $this->uri->segment(1) == 'supplier' ? 'menu-open' : '' ?>">
-                            <a href="#" class="nav-link <?= $this->uri->segment(1) == 'supplier' ? 'active' : '' ?> text-light">
-                                <i class="fas fa-truck nav-icon"></i>
+                        <?php if ($this->fungsi->user_login()->level == 2) { ?>
+                            <li class="nav-item">
+                                <a href="<?= site_url('transaction/sale') ?>" class="nav-link <?= $this->uri->segment(1) == 'transaction' ? 'active' : '' ?> text-light">
+                                    <i class="fas fa-money-bill-wave nav-icon"></i>
+                                    <p>
+                                        Transaksi
+                                    </p>
+                                </a>
+                            </li>
+                        <?php } ?>
+                        <?php if ($this->fungsi->user_login()->level == 1) { ?>
+                            <li class="nav-item">
+                                <a href="<?= site_url('user/list') ?>" class="nav-link <?= $this->uri->segment(2) == 'list' ? 'active' : '' ?> text-light">
+                                    <i class="nav-icon fas fa-users"></i>
+                                    <p>
+                                        User
+                                    </p>
+                                </a>
+                            </li>
+                        <?php } ?>
+                        <li class="nav-item has-treeview <?= $this->uri->segment(1) == 'sparepart' ||
+                                                                $this->uri->segment(1) == 'service' ||
+                                                                $this->uri->segment(1) == 'supplier' ||
+                                                                $this->uri->segment(1) == 'stock' ? 'menu-open' : '' ?> text-light">
+                            <a href="#" class="nav-link <?= $this->uri->segment(1) == 'sparepart' ||
+                                                            $this->uri->segment(1) == 'service' ||
+                                                            $this->uri->segment(1) == 'supplier' ||
+                                                            $this->uri->segment(1) == 'stock' ? 'active' : '' ?> text-light">
+                                <i class="nav-icon fas fa-layer-group"></i>
                                 <p>
-                                    Suplier
+                                    Master Data
                                     <i class="fas fa-angle-left right"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="<?= site_url('supplier') ?>" class="nav-link <?= $this->uri->segment(1) == 'supplier' ? 'active' : '' ?> text-light">
-                                        <i class="far fa-circle"></i>
-                                        <p>Supplier Data</p>
+                                    <a href="<?= site_url('sparepart') ?>" class="nav-link <?= $this->uri->segment(1) == 'sparepart' ? 'active' : '' ?>">
+                                        <i class="nav-icon far fa-circle"></i>
+                                        <p>Data Spare Part</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="<?= site_url('service') ?>" class="nav-link <?= $this->uri->segment(1) == 'service' ? 'active' : '' ?>">
+                                        <i class="nav-icon far fa-circle"></i>
+                                        <p>Data Service</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="<?= site_url('supplier') ?>" class="nav-link <?= $this->uri->segment(1) == 'supplier' ? 'active' : '' ?>">
+                                        <i class="nav-icon far fa-circle"></i>
+                                        <p>Data Supplier</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="<?= site_url('stock/stock_in_data') ?>" class="nav-link <?= $this->uri->segment(2) == 'stock_in_data' ? 'active' : '' ?>">
+                                        <i class="nav-icon far fa-circle"></i>
+                                        <p>Data Stock In</p>
                                     </a>
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item has-treeview <?= $this->uri->segment(1) == 'customer' ? 'menu-open' : '' ?>">
-                            <a href="#" class="nav-link <?= $this->uri->segment(1) == 'customer' ? 'active' : '' ?> text-light">
-                                <i class="fas fa-user-friends nav-icon"></i>
-                                <p>
-                                    Customer
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="<?= site_url('customer') ?>" class="nav-link <?= $this->uri->segment(1) == 'customer' ? 'active' : '' ?> text-light">
-                                        <i class="far fa-circle"></i>
-                                        <p>customer Data</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item has-treeview <?= $this->uri->segment(1) == 'user' ? 'menu-open' : '' ?> text-light">
-                            <a href="#" class="nav-link <?= $this->uri->segment(1) == 'user' ? 'active' : '' ?> text-light">
-                                <i class="nav-icon fas fa-users"></i>
-                                <p>
-                                    User
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="<?= site_url('user/profile') ?>" class="nav-link <?= $this->uri->segment(2) == 'profile' ? 'active' : '' ?> text-light">
-                                        <i class="far fa-circle"></i>
-                                        <p>My Profile</p>
-                                    </a>
-                                </li>
-                            </ul>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="<?= site_url('user/list') ?>" class="nav-link <?= $this->uri->segment(2) == 'list' ? 'active' : '' ?> text-light">
-                                        <i class="far fa-circle"></i>
-                                        <p>User List</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="nav-item has-treeview <?= $this->uri->segment(1) == 'product' ? 'menu-open' : '' ?> text-light">
-                            <a href="#" class="nav-link <?= $this->uri->segment(1) == 'product' ? 'active' : '' ?> text-light">
-                                <i class="fas fa-boxes nav-icon"></i>
-                                <p>
-                                    Product
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="<?= site_url('product') ?>" class="nav-link <?= $this->uri->segment(2) == '' ? 'active' : '' ?> text-light">
-                                        <i class="far fa-circle"></i>
-                                        <p>Product Category</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="<?= site_url('product/unit') ?>" class="nav-link <?= $this->uri->segment(2) == 'unit' ? 'active' : '' ?> text-light">
-                                        <i class="far fa-circle"></i>
-                                        <p>Product Unit</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="<?= site_url('product/item') ?>" class="nav-link <?= $this->uri->segment(2) == 'item' ? 'active' : '' ?> text-light">
-                                        <i class="far fa-circle"></i>
-                                        <p>Product Item</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="nav-item has-treeview <?= $this->uri->segment(1) == 'stock' ? 'menu-open' : '' ?> text-light">
-                            <a href="#" class="nav-link <?= $this->uri->segment(1) == 'stock' ? 'active' : '' ?> text-light">
-                                <i class="fas fa-layer-group"></i>
-                                <p>
-                                    Stock
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                        <li class="nav-item">
-                            <a href="<?= site_url('stock/stock_in_data') ?>" class="nav-link <?= $this->uri->segment(2) == 'stock_in_data' ? 'active' : '' ?> text-light">
-                                <i class="far fa-circle"></i>
-                                <p>Stock In</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?= site_url('stock/stock_out') ?>" class="nav-link <?= $this->uri->segment(2) == 'stock_out' ? 'active' : '' ?> text-light">
-                                <i class="far fa-circle"></i>
-                                <p>Stock Out</p>
-                            </a>
-                        </li>
-
-                        </li>
-                        <li class="nav-item has-treeview <?= $this->uri->segment(1) == 'transaction' ? 'menu-open' : '' ?> text-light">
-                            <a href="#" class="nav-link <?= $this->uri->segment(1) == 'transaction' ? 'active' : '' ?> text-light">
-                                <i class="fas fa-money-bill-wave nav-icon"></i>
-                                <p>
-                                    Transaction
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="<?= site_url('transaction/sale') ?>" class="nav-link <?= $this->uri->segment(2) == 'sale' ? 'active' : '' ?> text-light">
-                                        <i class="far fa-circle"></i>
-                                        <p>Sales</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="nav-item has-treeview <?= $this->uri->segment(1) == 'report' ? 'menu-open' : '' ?> text-light">
-                            <a href="#" class="nav-link <?= $this->uri->segment(1) == 'report' ? 'active' : '' ?> text-light">
-                                <i class="fas fa-file-invoice nav-icon"></i>
-                                <p>
-                                    Report
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="<?= site_url('report/sales_report') ?>" class="nav-link <?= $this->uri->segment(2) == 'sales_report' ? 'active' : '' ?> text-light">
-                                        <i class="far fa-circle"></i>
-                                        <p>Report Data</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+                        <?php if ($this->fungsi->user_login()->level == 1) { ?>
+                            <li class="nav-item">
+                                <a href="<?= site_url('report/sales_report') ?>" class="nav-link <?= $this->uri->segment(1) == 'report' ? 'active' : '' ?> text-light">
+                                    <i class="fas fa-file-invoice nav-icon"></i>
+                                    <p>
+                                        Report
+                                    </p>
+                                </a>
+                            </li>
+                        <?php } ?>
                 </nav>
                 <!-- /.sidebar-menu -->
             </div>

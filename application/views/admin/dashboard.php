@@ -80,9 +80,9 @@
     <!--/. container-fluid -->
 
     <!-- BAR CHART -->
-    <div class="card card-success">
+    <div class="card card-dark">
         <div class="card-header">
-            <h3 class="card-title">Top Product chart</h3>
+            <h3 class="card-title">Grafik Penjualan</h3>
         </div>
         <div class="card-body">
             <div class="row">
@@ -109,7 +109,7 @@
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer text-center">
-                        <a href="<?= site_url('report/sales_report') ?>" class="uppercase text-dark">View All Products</a>
+                        <a href="<?= site_url('report/sales_report') ?>" class="uppercase text-dark">Selengkapnya</a>
                     </div>
                     <!-- /.card-footer -->
                 </div>

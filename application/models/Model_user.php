@@ -7,7 +7,7 @@ class Model_user extends CI_Model
         $this->db->select('*');
         $this->db->from('user');
         $this->db->where('email', $post['email']);
-        $this->db->where('password', sha1($post['password']));
+        $this->db->where('password', md5($post['password']));
         $query = $this->db->get();
         return $query;
     }
@@ -27,7 +27,7 @@ class Model_user extends CI_Model
 
         $params['username'] = $post['name'];
         $params['email'] = $post['email'];
-        $params['password'] = sha1($post['password']);
+        $params['password'] = md5($post['password']);
         $params['image'] = 'avatar.png';
         $params['address'] = $post['address'];
         $params['level'] = $post['level'];

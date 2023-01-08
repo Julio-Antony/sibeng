@@ -14,10 +14,10 @@ class Model_stock extends CI_Model
 
     public function get_stock_in()
     {
-        $this->db->select('stock.stock_id, product_item.barcode, product_item.image, product_item.item_name as item_name,
-        qty, date, detail, supplier.supplier_name as supplier_name, product_item.item_id');
+        $this->db->select('stock.stock_id, sparepart.part_number, sparepart.image, sparepart.sparepart_name as sparepart_name,
+        qty, date, detail, supplier.supplier_name as supplier_name, sparepart.sparepart_id');
         $this->db->from('stock');
-        $this->db->join('product_item', 'stock.item_id = product_item.item_id');
+        $this->db->join('sparepart', 'stock.item_id = sparepart.sparepart_id');
         $this->db->join('supplier', 'stock.supplier_id = supplier.supplier_id', 'left');
         $this->db->where('type', 'in');
         $this->db->order_by('stock_id', 'desc');
@@ -28,7 +28,7 @@ class Model_stock extends CI_Model
     public function add_stock_in($post)
     {
         $params = [
-            'item_id' => $post['item_id'],
+            'item_id' => $post['sparepart_id'],
             'type' => 'in',
             'detail' => $post['detail'],
             'supplier_id' => $post['supplier'] == '' ? null : $post['supplier'],

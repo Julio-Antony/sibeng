@@ -6,20 +6,22 @@ class Transaction extends CI_Controller
     {
         parent::__construct();
         check_not_login();
-        $this->load->model(['model_transaction', 'model_customer', 'model_product']);
+        $this->load->model(['model_transaction', 'model_customer', 'model_sparepart', 'model_service']);
     }
 
     public function sale()
     {
         $customer = $this->model_customer->get()->result();
-        $item   = $this->model_product->get_item()->result();
+        $item   = $this->model_sparepart->get()->result();
         $cart = $this->model_transaction->get_cart();
+        $service = $this->model_service->get()->result();
         $data = array(
             'customer' => $customer,
             'item' => $item,
             'cart' => $cart,
+            'service' => $service,
             'invoice' => $this->model_transaction->invoice_no(),
-            'title' => 'POS - Sales'
+            'title' => 'SIBENG - Transaksi'
         );
         $this->template->load('template', 'transaction/sale_form', $data);
     }
@@ -30,13 +32,31 @@ class Transaction extends CI_Controller
 
         if (isset($_POST['add_cart'])) {
 
-            $item_id = $this->input->post('item_id');
-            $check_cart = $this->model_transaction->get_cart(['cart.item_id' => $item_id])->num_rows();
+            $sparepart_id = $this->input->post('sparepart_id');
+            $check_cart = $this->model_transaction->get_cart(['cart.item_id' => $sparepart_id])->num_rows();
             if ($check_cart > 0) {
                 $this->model_transaction->update_cart_qty($data);
             } else {
                 $this->model_transaction->add_cart($data);
             }
+
+            if ($this->db->affected_rows() > 0) {
+                $params = array("success" => TRUE);
+            } else {
+                $params = array("success" => FALSE);
+            }
+            echo json_encode($params);
+        }
+
+        if (isset($_POST['add_service'])) {
+
+            $service_id = $this->input->post('service_id');
+            $check_cart = $this->model_transaction->get_cart(['cart.service_id' => $service_id])->num_rows();
+            if ($check_cart > 0) {
+                echo "<script>alert('Biaya service sudah diinput !');</script>";
+            } else {
+            }
+            $this->model_transaction->add_service($data);
 
             if ($this->db->affected_rows() > 0) {
                 $params = array("success" => TRUE);
@@ -68,10 +88,10 @@ class Transaction extends CI_Controller
                     $row,
                     array(
                         'sales_id' => $sales_id,
-                        'item_id' => $value->item_id,
+                        'sparepart_id' => $value->item_id,
                         'price' => $value->price,
                         'qty' => $value->qty,
-                        'discount_item' => $value->discount_item,
+                        // 'discount_item' => $value->discount_item,
                         'total' => $value->total,
                     )
                 );

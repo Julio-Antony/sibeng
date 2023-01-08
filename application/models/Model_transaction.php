@@ -19,9 +19,9 @@ class Model_transaction extends CI_Model
 
     public function get_cart($params = null)
     {
-        $this->db->select('*, product_item.item_name, cart.price as cart_price');
+        $this->db->select('*, sparepart.sparepart_name, cart.price as cart_price');
         $this->db->from('cart');
-        $this->db->join('product_item', 'cart.item_id = product_item.item_id');
+        $this->db->join('sparepart', 'cart.item_id = sparepart.sparepart_id');
         if ($params != null) {
             $this->db->where($params);
         }
@@ -42,7 +42,28 @@ class Model_transaction extends CI_Model
 
         $params = array(
             'cart_id' => $cart_no,
-            'item_id' => $post['item_id'],
+            'item_id' => $post['sparepart_id'],
+            'price' => $post['price'],
+            'qty' => $post['qty'],
+            'total' => ($post['price'] * $post['qty']),
+            'user_id' => $this->session->userdata('userid')
+        );
+        $this->db->insert('cart', $params);
+    }
+
+    public function add_service($post)
+    {
+        $query = $this->db->query("SELECT MAX(cart_id)AS cart_no FROM cart");
+        if ($query->num_rows() > 0) {
+            $row = $query->row();
+            $cart_no = ((int)$row->cart_no) + 1;
+        } else {
+            $cart_no = "1";
+        }
+
+        $params = array(
+            'cart_id' => $cart_no,
+            'service_id' => $post['service_id'],
             'price' => $post['price'],
             'qty' => $post['qty'],
             'total' => ($post['price'] * $post['qty']),
@@ -56,7 +77,7 @@ class Model_transaction extends CI_Model
         $sql = "UPDATE cart SET price = '$post[price]',
                 qty = qty + '$post[qty]',
                 total = '$post[price]'  * qty
-                WHERE item_id = '$post[item_id]'";
+                WHERE item_id = '$post[sparepart_id]'";
         $this->db->query($sql);
     }
 
@@ -73,7 +94,6 @@ class Model_transaction extends CI_Model
         $params = array(
             'price' => $post['price'],
             'qty' => $post['qty'],
-            'discount_item' => $post['discount'],
             'total' => $post['total'],
         );
         $this->db->where('cart_id', $post['cart_id']);
@@ -84,13 +104,13 @@ class Model_transaction extends CI_Model
     {
         $params = array(
             'invoice' => $this->invoice_no(),
-            'customer_id' => $post['customer_id'] == "" ? null : $post['customer_id'],
-            'total_price' => $post['subtotal'],
-            'discount' => $post['discount'],
+            // 'customer_id' => $post['customer_id'] == "" ? null : $post['customer_id'],
+            // 'total_price' => $post['subtotal'],
+            // 'discount' => $post['discount'],
             'final_price' => $post['grand_total'],
             'cash' => $post['cash'],
             'remaining' => $post['change'],
-            'note' => $post['note'],
+            // 'note' => $post['note'],
             'date' => $post['date'],
             'user_id' => $this->session->userdata('userid')
         );

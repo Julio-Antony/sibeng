@@ -3,7 +3,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">User List</h1>
+                <h1 class="m-0 text-dark">Daftar Pengguna</h1>
             </div><!-- /.col -->
         </div><!-- /.row -->
     </div><!-- /.container-fluid -->
@@ -16,13 +16,13 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Fixed Header Table</h3>
+                    <div class="card-header bg-dark">
+                        <h3 class="card-title">Daftar Pengguna</h3>
                         <?php if ($this->fungsi->user_login()->level == 1) { ?>
                             <div class="float-right">
-                                <a href="<?= site_url('user/add') ?>" class="btn btn-primary btn-flat btn-sm">
-                                    <i class="fa fa-user-plus"></i>
-                                    Add User
+                                <a href="<?= site_url('user/add') ?>" class="btn btn-danger btn-flat btn-sm">
+                                    <i class="fa fa-user-plus mr-1"></i>
+                                    Tambah Pengguna
                                 </a>
                             </div>
                         <?php } ?>
@@ -34,8 +34,8 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Email</th>
-                                    <th>Name</th>
-                                    <th>Address</th>
+                                    <th>Nama</th>
+                                    <th>Alamat</th>
                                     <th>Level</th>
                                     <?php if ($this->fungsi->user_login()->level == 1) { ?>
                                         <th>Action</th>
