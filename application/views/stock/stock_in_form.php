@@ -30,7 +30,7 @@
                             <label for="part_number" class="col-sm-2 col-form-label">Part Number</label>
                             <div class="col-sm-10">
                                 <div class="input-group">
-                                    <input type="hidden" name="sparepart_id" id="sparepart_id">
+                                    <input type="hidden" name="product_id" id="product_id">
                                     <input type="text" class="form-control" id="part_number" name="part_number" required>
                                     <div class="input-group-append">
                                         <button type="button" class="btn btn-danger " data-toggle="modal" data-target="#modal-item">
@@ -41,9 +41,9 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="sparepart_name" class="col-sm-2 col-form-label">Nama Sparepart</label>
+                            <label for="product_name" class="col-sm-2 col-form-label">Nama Sparepart</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="sparepart_name" name="sparepart_name" readonly>
+                                <input type="text" class="form-control" id="product_name" name="product_name" readonly>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -114,11 +114,11 @@
                         <?php foreach ($item as $i => $data) {  ?>
                             <tr>
                                 <td><?= $data->part_number ?></td>
-                                <td><?= $data->sparepart_name ?></td>
+                                <td><?= $data->product_name ?></td>
                                 <td><?= indo_currency($data->price) ?></td>
                                 <td><?= $data->stock ?></td>
                                 <td>
-                                    <button class="btn btn-danger btn-xs" id="select" data-id="<?= $data->sparepart_id ?>" data-part_number="<?= $data->part_number ?>" data-sparepart_name="<?= $data->sparepart_name ?>" data-stock="<?= $data->stock ?>">
+                                    <button class="btn btn-danger btn-xs" id="select" data-id="<?= $data->product_id ?>" data-part_number="<?= $data->part_number ?>" data-product_name="<?= $data->product_name ?>" data-stock="<?= $data->stock ?>">
                                         <i class="fa fa-check"></i> Pilih
                                     </button>
                                 </td>
@@ -134,14 +134,14 @@
 <script>
     $(document).ready(function() {
         $(document).on('click', '#select', function() {
-            var sparepart_id = $(this).data('id');
+            var product_id = $(this).data('id');
             var part_number = $(this).data('part_number');
-            var sparepart_name = $(this).data('sparepart_name');
+            var product_name = $(this).data('product_name');
             var unit_name = $(this).data('unit_name');
             var stock = $(this).data('stock');
-            $('#sparepart_id').val(sparepart_id);
+            $('#product_id').val(product_id);
             $('#part_number').val(part_number);
-            $('#sparepart_name').val(sparepart_name);
+            $('#product_name').val(product_name);
             $('#initial_stock').val(stock);
             $('#modal-item').modal('hide');
         })

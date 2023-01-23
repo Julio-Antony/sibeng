@@ -36,8 +36,8 @@
                     <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-user-friends nav-icon"></i></span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">Customer</span>
-                        <span class="info-box-number"><?= $this->fungsi->count_customer() ?></span>
+                        <span class="info-box-text">Service</span>
+                        <span class="info-box-number"><?= $this->fungsi->count_service() ?></span>
                     </div>
                     <!-- /.info-box-content -->
                 </div>
@@ -95,10 +95,10 @@
                             <ul class="products-list product-list-in-card pl-2 pr-2">
                                 <li class="item">
                                     <div class="product-img">
-                                        <img src="<?= base_url('assets/dist/img/product/' . $data->image) ?>" alt="Product Image" class="img-size-50">
+                                        <img src="<?= base_url('assets/dist/img/sparepart/' . $data->image) ?>" alt="Product Image" class="img-size-50">
                                     </div>
                                     <div class="product-info">
-                                        <a href="javascript:void(0)" class="product-title text-dark"><?= $data->item_name ?>
+                                        <a href="javascript:void(0)" class="product-title text-dark"><?= $data->product_name ?>
                                             <span class="product-description">
                                                 <?= $data->sold ?> Porsi
                                             </span>
@@ -133,7 +133,7 @@
         // the chart.
         data: [
             <?php foreach ($row as $data) {
-                echo "{ item :'" . $data->item_name . "', sold :'" . $data->sold . "'},";
+                echo "{ item :'" . $data->product_name . "', sold :'" . $data->sold . "'},";
             } ?>
         ],
         // The name of the data record attribute that contains x-values.

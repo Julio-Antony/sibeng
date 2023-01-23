@@ -23,14 +23,14 @@
                     <div class="form-group row">
                         <label for="part_number" class="col-sm-2 col-form-label">Part Number</label>
                         <div class="col-sm-10">
-                            <input type="hidden" name="id" value="<?= $row->sparepart_id ?>">
+                            <input type="hidden" name="id" value="<?= $row->product_id ?>">
                             <input type="text" class="form-control" id="part_number" name="part_number" value="<?= $row->part_number ?>" placeholder="Part Number" required>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="sparepart_name" class="col-sm-2 col-form-label">Nama Sparepart</label>
+                        <label for="product_name" class="col-sm-2 col-form-label">Nama Sparepart</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="sparepart_name" name="sparepart_name" value="<?= $row->sparepart_name ?>" placeholder="Nama Sparepart" required>
+                            <input type="text" class="form-control" id="product_name" name="product_name" value="<?= $row->product_name ?>" placeholder="Nama Sparepart" required>
                         </div>
                     </div>
                     <div class="form-group row">

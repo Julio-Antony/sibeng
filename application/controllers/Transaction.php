@@ -6,20 +6,18 @@ class Transaction extends CI_Controller
     {
         parent::__construct();
         check_not_login();
-        $this->load->model(['model_transaction', 'model_customer', 'model_sparepart', 'model_service']);
+        $this->load->model(['model_transaction', 'model_customer', 'model_product', 'model_service']);
     }
 
     public function sale()
     {
-        $customer = $this->model_customer->get()->result();
-        $item   = $this->model_sparepart->get()->result();
+        $item   = $this->model_product->get_sparepart()->result();
+        $service = $this->model_product->get_service()->result();
         $cart = $this->model_transaction->get_cart();
-        $service = $this->model_service->get()->result();
         $data = array(
-            'customer' => $customer,
             'item' => $item,
-            'cart' => $cart,
             'service' => $service,
+            'cart' => $cart,
             'invoice' => $this->model_transaction->invoice_no(),
             'title' => 'SIBENG - Transaksi'
         );
@@ -32,8 +30,8 @@ class Transaction extends CI_Controller
 
         if (isset($_POST['add_cart'])) {
 
-            $sparepart_id = $this->input->post('sparepart_id');
-            $check_cart = $this->model_transaction->get_cart(['cart.item_id' => $sparepart_id])->num_rows();
+            $product_id = $this->input->post('product_id');
+            $check_cart = $this->model_transaction->get_cart(['cart.product_id' => $product_id])->num_rows();
             if ($check_cart > 0) {
                 $this->model_transaction->update_cart_qty($data);
             } else {
@@ -88,7 +86,7 @@ class Transaction extends CI_Controller
                     $row,
                     array(
                         'sales_id' => $sales_id,
-                        'sparepart_id' => $value->item_id,
+                        'product_id' => $value->product_id,
                         'price' => $value->price,
                         'qty' => $value->qty,
                         // 'discount_item' => $value->discount_item,

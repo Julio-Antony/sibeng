@@ -21,10 +21,10 @@
                 <div class="tab-pane" id="settings">
                     <?= form_open_multipart('service/process') ?>
                     <div class="form-group row">
-                        <label for="service_name" class="col-sm-2 col-form-label">Nama Service</label>
+                        <label for="product_name" class="col-sm-2 col-form-label">Nama Service</label>
                         <div class="col-sm-10">
-                            <input type="hidden" name="id" value="<?= $row->service_id ?>">
-                            <input type="text" class="form-control" id="service_name" name="service_name" value="<?= $row->service_name ?>" placeholder="Nama Service" required>
+                            <input type="hidden" name="id" value="<?= $row->product_id ?>">
+                            <input type="text" class="form-control" id="product_name" name="product_name" value="<?= $row->product_name ?>" placeholder="Nama Service" required>
                         </div>
                     </div>
                     <div class="form-group row">

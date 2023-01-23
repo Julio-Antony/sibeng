@@ -65,7 +65,7 @@
                                 </td>
                                 <td>
                                     <div class="input-group">
-                                        <input type="hidden" id="sparepart_id">
+                                        <input type="hidden" id="product_id">
                                         <input type="hidden" id="price">
                                         <input type="hidden" id="stock">
                                         <input type="hidden" id="qty_cart">
@@ -235,11 +235,11 @@
                         <?php foreach ($item as $i => $data) {  ?>
                             <tr>
                                 <td><?= $data->part_number ?></td>
-                                <td><?= $data->sparepart_name ?></td>
+                                <td><?= $data->product_name ?></td>
                                 <td><?= indo_currency($data->price) ?></td>
                                 <td><?= $data->stock ?></td>
                                 <td>
-                                    <button class="btn btn-danger btn-xs" id="select" data-id="<?= $data->sparepart_id ?>" data-part_number="<?= $data->part_number ?>" data-sparepart_name="<?= $data->sparepart_name ?>" data-price="<?= $data->price ?>" data-stock="<?= $data->stock ?>">
+                                    <button class="btn btn-danger btn-xs" id="select" data-id="<?= $data->product_id ?>" data-part_number="<?= $data->part_number ?>" data-product_name="<?= $data->product_name ?>" data-price="<?= $data->price ?>" data-stock="<?= $data->stock ?>">
                                         <i class="fa fa-check"></i> Select
                                     </button>
                                 </td>
@@ -273,14 +273,14 @@
                     <tbody>
                         <?php foreach ($service as $s => $data) {  ?>
                             <tr>
-                                <td><?= $data->service_name ?></td>
+                                <td><?= $data->product_name ?></td>
                                 <td><?= indo_currency($data->price) ?></td>
                                 <td>
                                     <div class="input-group">
-                                        <input type="hidden" id="service_id" value="<?= $data->service_id ?>">
-                                        <input type="hidden" id="service_name" value="<?= $data->service_name ?>">
-                                        <input type="hidden" id="price" value="<?= $data->price ?>">
-                                        <button class="btn btn-danger btn-xs" id="service" data-id="<?= $data->service_id ?>" data-service_name="<?= $data->service_name ?>" data-service-price="<?= $data->price ?>">
+                                        <input type="hidden" id="service_id" value="<?= $data->product_id ?>">
+                                        <input type="hidden" id="service_name" value="<?= $data->product_name ?>">
+                                        <input type="hidden" id="service_price" value="<?= $data->price ?>">
+                                        <button class="btn btn-danger btn-xs" id="service" data-service_id="<?= $data->product_id ?>" data-service_name="<?= $data->product_name ?>" data-service_price="<?= $data->price ?>">
                                             <i class="fa fa-check"></i> Pilih
                                         </button>
                                     </div>
@@ -349,7 +349,7 @@
 
     <script>
         $(document).on('click', '#select', function() {
-            $('#sparepart_id').val($(this).data('id'))
+            $('#product_id').val($(this).data('id'))
             $('#part_number').val($(this).data('part_number'))
             $('#price').val($(this).data('price'))
             $('#stock').val($(this).data('stock'))
@@ -371,26 +371,26 @@
         }
 
         $(document).on('click', '#service', function() {
-            var service_id = $('#service_id').val()
-            // var service_name = $('#service_name').val()
-            var price = $('#price').val()
+            var product_id = $(this).data('service_id')
+            var price = $(this).data('service_price')
+            var qty = 1
             $('#modal-service').modal('hide')
-            console.log(service_id)
-            if (service_id == '') {
+            console.log(price)
+            if (product_id == '') {
                 alert('Service belum dipilih')
             } else {
                 $.ajax({
                     type: 'POST',
                     url: '<?= site_url('transaction/process') ?>',
-                    dataType: 'json',
                     data: {
-                        'add_service': true,
-                        'sparepart_id': sparepart_id,
+                        'add_cart': true,
+                        'product_id': product_id,
                         'price': price,
+                        'qty': qty
                     },
-                    cache: false,
-                    // processData: false,
+                    dataType: 'json',
                     success: function(result) {
+                        console.log(result)
                         if (result.success == true) {
                             $('#cart_table').load('<?= site_url('transaction/cart_data') ?>', function() {
                                 calculate()
@@ -398,18 +398,22 @@
                         } else {
                             alert('Gagal tambah item ke db')
                         }
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        alert(errorThrown);
                     }
                 })
             }
         })
 
         $(document).on('click', '#add-chart', function() {
-            var sparepart_id = $('#sparepart_id').val()
+            var product_id = $('#product_id').val()
             var price = $('#price').val()
             var stock = $('#stock').val()
             var qty = $('#qty').val()
+            console.log(qty)
             var qty_cart = $('#qty_cart').val()
-            if (sparepart_id == '') {
+            if (product_id == '') {
                 alert('Product belum dipilih')
                 $('#part_number').focus()
             } else if (stock < 1 || parseInt(stock) < (parseInt(qty_cart) + parseInt(qty))) {
@@ -421,7 +425,7 @@
                     url: '<?= site_url('transaction/process') ?>',
                     data: {
                         'add_cart': true,
-                        'sparepart_id': sparepart_id,
+                        'product_id': product_id,
                         'price': price,
                         'qty': qty
                     },
@@ -431,7 +435,7 @@
                             $('#cart_table').load('<?= site_url('transaction/cart_data') ?>', function() {
                                 calculate()
                             })
-                            $('#sparepart_id').val('')
+                            $('#product_id').val('')
                             $('#part_number').val('')
                             $('#qty').val(1)
                             $('#part_number').focus()
@@ -602,6 +606,9 @@
                                 alert('Transaksi Gagal');
                             }
                             location.href = '<?= site_url('transaction/sale') ?>'
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            alert(textStatus);
                         }
                     })
                 }

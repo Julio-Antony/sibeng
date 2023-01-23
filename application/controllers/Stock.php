@@ -6,7 +6,7 @@ class Stock extends CI_Controller
     {
         parent::__construct();
         check_not_login();
-        $this->load->model(['model_sparepart', 'model_supplier', 'model_stock']);
+        $this->load->model(['model_product', 'model_supplier', 'model_stock']);
     }
 
     public function stock_in_data()
@@ -18,7 +18,7 @@ class Stock extends CI_Controller
 
     public function stock_in_add()
     {
-        $item = $this->model_sparepart->get()->result();
+        $item = $this->model_product->get_sparepart()->result();
         $supplier = $this->model_supplier->get()->result();
         $data = [
             'item' => $item,
@@ -33,7 +33,7 @@ class Stock extends CI_Controller
         if (isset($_POST['in_add'])) {
             $post = $this->input->post(null, TRUE);
             $this->model_stock->add_stock_in($post);
-            $this->model_sparepart->update_stock_in($post);
+            $this->model_product->update_stock_in($post);
             if ($this->db->affected_rows() > 0) {
                 $this->session->set_flashdata('success', 'Data berhasil disimpan');
             }
@@ -50,10 +50,10 @@ class Stock extends CI_Controller
             'qty' => $qty,
             'item_id' => $item_id
         ];
-        $this->model_sparepart->update_stock_out($data);
+        $this->model_product->update_stock_out($data);
         $this->model_stock->delete_stock($stock_id);
         if ($this->db->affected_rows() > 0) {
-            $this->session->set_flashdata('success', 'Data berhasil dihapus');
+            $this->session->set_flashdata('error', 'Data berhasil dihapus');
         }
         redirect('stock/stock_in_data');
     }

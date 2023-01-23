@@ -19,9 +19,9 @@ class Model_transaction extends CI_Model
 
     public function get_cart($params = null)
     {
-        $this->db->select('*, sparepart.sparepart_name, cart.price as cart_price');
+        $this->db->select('*,  product.product_name as cart_name, cart.price as cart_price');
         $this->db->from('cart');
-        $this->db->join('sparepart', 'cart.item_id = sparepart.sparepart_id');
+        $this->db->join('product', 'cart.product_id = product.product_id');
         if ($params != null) {
             $this->db->where($params);
         }
@@ -42,7 +42,7 @@ class Model_transaction extends CI_Model
 
         $params = array(
             'cart_id' => $cart_no,
-            'item_id' => $post['sparepart_id'],
+            'product_id' => $post['product_id'],
             'price' => $post['price'],
             'qty' => $post['qty'],
             'total' => ($post['price'] * $post['qty']),
@@ -77,7 +77,7 @@ class Model_transaction extends CI_Model
         $sql = "UPDATE cart SET price = '$post[price]',
                 qty = qty + '$post[qty]',
                 total = '$post[price]'  * qty
-                WHERE item_id = '$post[sparepart_id]'";
+                WHERE product_id = '$post[product_id]'";
         $this->db->query($sql);
     }
 
@@ -125,9 +125,9 @@ class Model_transaction extends CI_Model
 
     public function get_sale($id = null)
     {
-        $this->db->select('*, customer.customer_name as customer_name, user.username as username, sales.created as sales_created');
+        $this->db->select('*, user.username as username, sales.created as sales_created');
         $this->db->from('sales');
-        $this->db->join('customer', 'sales.customer_id = customer.customer_id', 'left');
+        // $this->db->join('customer', 'sales.customer_id = customer.customer_id', 'left');
         $this->db->join('user', 'sales.user_id = user.user_id');
 
         if ($id != null) {
@@ -140,7 +140,7 @@ class Model_transaction extends CI_Model
     public function get_sale_detail($sales_id = null)
     {
         $this->db->from('sales_detail');
-        $this->db->join('product_item', 'sales_detail.item_id = product_item.item_id');
+        $this->db->join('product', 'sales_detail.product_id = product.product_id');
         if ($sales_id != null) {
             $this->db->where('sales_detail.sales_id', $sales_id);
         }

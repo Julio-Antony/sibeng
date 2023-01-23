@@ -37,7 +37,7 @@ class Fungsi
     public function count_item()
     {
         $this->ci->load->model('model_product');
-        return $this->ci->model_product->get_item()->num_rows();
+        return $this->ci->model_product->get_sparepart()->num_rows();
     }
 
     public function count_supplier()
@@ -46,10 +46,10 @@ class Fungsi
         return $this->ci->model_supplier->get()->num_rows();
     }
 
-    public function count_customer()
+    public function count_service()
     {
-        $this->ci->load->model('model_customer');
-        return $this->ci->model_customer->get()->num_rows();
+        $this->ci->load->model('model_product');
+        return $this->ci->model_product->get_service()->num_rows();
     }
 
     public function count_user()

@@ -4,6 +4,9 @@
         <div class="row mb-2">
             <div class="col-sm-6">
                 <h1 class="m-0 text-dark">Riwayat Stock In Sparepart</h1>
+            </div>
+            <div class="col-sm-4 offset-sm-2">
+                <?php $this->view('message') ?>
             </div><!-- /.col -->
         </div><!-- /.row -->
     </div><!-- /.container-fluid -->
@@ -43,15 +46,15 @@
                                     <tr>
                                         <td style="width:5%;"><?= $no++ ?>.</td>
                                         <td><?= $data->part_number ?></td>
-                                        <td><?= $data->sparepart_name ?></td>
+                                        <td><?= $data->product_name ?></td>
                                         <td><?= $data->qty ?></td>
                                         <td><?= indo_date($data->date) ?></td>
                                         <td>
-                                            <a href="javascript;" class="btn btn-info btn-flat btn-xs" id="detail-button" data-toggle="modal" data-target="#modal-detail" data-image="<?= $data->image ?>" data-part_number="<?= $data->part_number ?>" data-sparepart_name="<?= $data->sparepart_name ?>" data-detail="<?= $data->detail ?>" data-supplier_name="<?= $data->supplier_name ?>" data-qty="<?= $data->qty ?>" data-date="<?= indo_date($data->date) ?>">
+                                            <a href="javascript;" class="btn btn-info btn-flat btn-xs" id="detail-button" data-toggle="modal" data-target="#modal-detail" data-image="<?= $data->image ?>" data-part_number="<?= $data->part_number ?>" data-product_name="<?= $data->product_name ?>" data-detail="<?= $data->detail ?>" data-supplier_name="<?= $data->supplier_name ?>" data-qty="<?= $data->qty ?>" data-date="<?= indo_date($data->date) ?>">
                                                 <i class="fas fa-eye"></i>
                                                 detail
                                             </a>
-                                            <a href="<?= site_url('stock/stock_in_delete/' . $data->stock_id . '/' . $data->sparepart_id) ?>" onclick="return confirm('yakin hapus data?')" class="btn btn-danger btn-flat btn-xs">
+                                            <a href="<?= site_url('stock/stock_in_delete/' . $data->stock_id . '/' . $data->product_id) ?>" onclick="return confirm('yakin hapus data?')" class="btn btn-danger btn-flat btn-xs">
                                                 <i class="fas fa-trash"></i>
                                                 Delete
                                             </a>
@@ -76,7 +79,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-dark">
-                <p class="modal-title ml-auto" id="sparepart_name"></p>
+                <p class="modal-title ml-auto" id="product_name"></p>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -116,14 +119,14 @@
         $(document).on('click', '#detail-button', function() {
             var image = $(this).data('image');
             var part_number = $(this).data('part_number');
-            var sparepart_name = $(this).data('sparepart_name');
+            var product_name = $(this).data('product_name');
             var detail = $(this).data('detail');
             var supplier_name = $(this).data('supplier_name');
             var qty = $(this).data('qty');
             var date = $(this).data('date');
             $('#image').attr('src', '<?php echo base_url() ?>assets/dist/img/sparepart/' + image);
             $('#part_number').text(part_number);
-            $('#sparepart_name').text(sparepart_name);
+            $('#product_name').text(product_name);
             $('#detail').text(detail);
             $('#supplier_name').text(supplier_name);
             $('#qty').text(qty);

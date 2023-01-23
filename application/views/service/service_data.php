@@ -23,7 +23,7 @@
                         <div class="float-right">
                             <a href="<?= site_url('service/add') ?>" class="btn btn-danger btn-flat btn-sm">
                                 <i class="fa fa-plus"></i>
-                                Tambah SerVice
+                                Tambah Service
                             </a>
                         </div>
                     </div>
@@ -45,16 +45,16 @@
                                 foreach ($row->result() as $key => $data) { ?>
                                     <tr>
                                         <td><?= $no++ ?>.</td>
-                                        <td><?= $data->service_name ?></td>
+                                        <td><?= $data->product_name ?></td>
                                         <td><?= $data->price ?></td>
                                         <td><?= $data->created ?></td>
                                         <td><?= $data->updated ?></td>
                                         <td>
-                                            <a href="<?= site_url('service/edit/' . $data->service_id) ?>" class="btn btn-success btn-flat btn-xs">
+                                            <a href="<?= site_url('service/edit/' . $data->product_id) ?>" class="btn btn-success btn-flat btn-xs">
                                                 <i class="fas fa-pencil-alt"></i>
                                                 Sunting
                                             </a>
-                                            <a href="<?= site_url('service/delete/' . $data->service_id) ?>" onclick="return confirm('yakin hapus data?')" class="btn btn-danger btn-flat btn-xs">
+                                            <a href="<?= site_url('service/delete/' . $data->product_id) ?>" onclick="return confirm('yakin hapus data?')" class="btn btn-danger btn-flat btn-xs">
                                                 <i class="fas fa-trash"></i>
                                                 Hapus
                                             </a>

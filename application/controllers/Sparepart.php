@@ -6,28 +6,28 @@ class Sparepart extends CI_Controller
     {
         parent::__construct();
         check_not_login();
-        $this->load->model('Model_sparepart');
+        $this->load->model('Model_product');
     }
 
     public function index()
     {
         $data['title'] = 'POS - Sparepart';
-        $data['row'] = $this->Model_sparepart->get();
+        $data['row'] = $this->Model_product->get_sparepart();
         $this->template->load('template', 'sparepart/sparepart_data', $data);
     }
 
     public function add()
     {
-        $sparepart = new stdClass();
-        $sparepart->sparepart_id = null;
-        $sparepart->part_number = null;
-        $sparepart->sparepart_name = null;
-        $sparepart->price = null;
-        $sparepart->stock = null;
+        $product = new stdClass();
+        $product->product_id = null;
+        $product->part_number = null;
+        $product->product_name = null;
+        $product->price = null;
+        $product->stock = null;
         $data = array(
             'page' => 'Tambah',
             'title' => 'POS - Tambah Data Sparepart',
-            'row' => $sparepart
+            'row' => $product
         );
 
         $this->template->load('template', 'sparepart/sparepart_form', $data);
@@ -35,13 +35,13 @@ class Sparepart extends CI_Controller
 
     public function edit($id)
     {
-        $query = $this->Model_sparepart->get($id);
+        $query = $this->Model_product->get_sparepart($id);
         if ($query->num_rows() > 0) {
-            $sparepart = $query->row();
+            $product = $query->row();
             $data = array(
                 'page' => 'Edit',
                 'title' => 'POS - Edit Data Sparepart',
-                'row' => $sparepart
+                'row' => $product
             );
             $this->template->load('template', 'sparepart/sparepart_form', $data);
         } else {
@@ -60,14 +60,14 @@ class Sparepart extends CI_Controller
 
         $post = $this->input->post(null, TRUE);
         if (isset($_POST['Tambah'])) {
-            if ($this->Model_sparepart->check_partnumber($post['part_number'])->num_rows() > 0) {
+            if ($this->Model_product->check_partnumber($post['part_number'])->num_rows() > 0) {
                 $this->session->set_flashdata('error', "Part Number $post[part_number] sudah dipakai sparepart lain");
                 redirect('sparepart/add');
             } else {
                 if (@$_FILES['image']['name'] != null) {
                     if ($this->upload->do_upload('image')) {
                         $post['image'] = $this->upload->data('file_name');
-                        $this->Model_sparepart->add($post);
+                        $this->Model_product->add_sparepart($post);
                         if ($this->db->affected_rows() > 0) {
                             $this->session->set_flashdata('success', 'Data berhasil disimpan');
                         }
@@ -79,7 +79,7 @@ class Sparepart extends CI_Controller
                     }
                 } else {
                     $post['image'] = null;
-                    $this->Model_sparepart->add($post);
+                    $this->Model_product->add_sparepart($post);
                     if ($this->db->affected_rows() > 0) {
                         $this->session->set_flashdata('success', 'Data berhasil disimpan');
                     }
@@ -87,21 +87,21 @@ class Sparepart extends CI_Controller
                 }
             }
         } else if (isset($_POST['Edit'])) {
-            if ($this->Model_sparepart->check_partnumber($post['barcode'], $post['id'])->num_rows() > 0) {
+            if ($this->Model_product->check_partnumber($post['part_number'], $post['id'])->num_rows() > 0) {
                 $this->session->set_flashdata('error', "Part Number $post[part_number] sudah dipakai sparepart lain");
                 redirect('sparepart/edit/' . $post['id']);
             } else {
                 if (@$_FILES['image']['name'] != null) {
                     if ($this->upload->do_upload('image')) {
 
-                        $item = $this->Model_sparepart->get($post['id'])->row();
+                        $item = $this->Model_product->get_sparepart($post['id'])->row();
                         if ($item->image != null) {
                             $target_file = './assets/dist/img/sparepart' . $item->image;
                             unlink($target_file);
                         }
 
                         $post['image'] = $this->upload->data('file_name');
-                        $this->Model_sparepart->edit($post);
+                        $this->Model_product->edit_product($post);
                         if ($this->db->affected_rows() > 0) {
                             $this->session->set_flashdata('success', 'Data berhasil disimpan');
                         }
@@ -113,7 +113,7 @@ class Sparepart extends CI_Controller
                     }
                 } else {
                     $post['image'] = null;
-                    $this->Model_sparepart->edit($post);
+                    $this->Model_product->edit_sparepart($post);
                     if ($this->db->affected_rows() > 0) {
                         $this->session->set_flashdata('success', 'Data berhasil disimpan');
                     }
@@ -125,9 +125,9 @@ class Sparepart extends CI_Controller
 
     public function delete($id)
     {
-        $this->Model_sparepart->delete($id);
+        $this->Model_product->delete_sparepart($id);
         if ($this->db->affected_rows() > 0) {
-            $this->session->set_flashdata('danger', 'Data dihapus');
+            $this->session->set_flashdata('error', 'Data dihapus');
         }
         redirect('sparepart');
     }

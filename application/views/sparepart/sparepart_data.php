@@ -52,15 +52,15 @@
                                             <?php } ?>
                                         </td>
                                         <td><?= $data->part_number ?></td>
-                                        <td><?= $data->sparepart_name ?></td>
+                                        <td><?= $data->product_name ?></td>
                                         <td><?= $data->price ?></td>
                                         <td><?= $data->stock ?></td>
                                         <td>
-                                            <a href="<?= site_url('sparepart/edit/' . $data->sparepart_id) ?>" class="btn btn-success btn-flat btn-xs">
+                                            <a href="<?= site_url('sparepart/edit/' . $data->product_id) ?>" class="btn btn-success btn-flat btn-xs">
                                                 <i class="fas fa-pencil-alt"></i>
                                                 Edit
                                             </a>
-                                            <a href="<?= site_url('sparepart/delete/' . $data->sparepart_id) ?>" onclick="return confirm('yakin hapus data?')" class="btn btn-danger btn-flat btn-xs">
+                                            <a href="<?= site_url('sparepart/delete/' . $data->product_id) ?>" onclick="return confirm('yakin hapus data?')" class="btn btn-danger btn-flat btn-xs">
                                                 <i class="fas fa-trash"></i>
                                                 Delete
                                             </a>

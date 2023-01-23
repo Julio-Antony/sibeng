@@ -6,21 +6,21 @@ class Service extends CI_Controller
     {
         parent::__construct();
         check_not_login();
-        $this->load->model('Model_service');
+        $this->load->model('Model_product');
     }
 
     public function index()
     {
         $data['title'] = 'SIBENG - Service';
-        $data['row'] = $this->Model_service->get();
+        $data['row'] = $this->Model_product->get_service();
         $this->template->load('template', 'service/service_data', $data);
     }
 
     public function add()
     {
         $service = new stdClass();
-        $service->service_id = null;
-        $service->service_name = null;
+        $service->product_id = null;
+        $service->product_name = null;
         $service->price = null;
         $data = array(
             'page' => 'Tambah',
@@ -33,13 +33,13 @@ class Service extends CI_Controller
 
     public function edit($id)
     {
-        $query = $this->Model_service->get($id);
+        $query = $this->Model_product->get_service($id);
         if ($query->num_rows() > 0) {
-            $service = $query->row();
+            $product = $query->row();
             $data = array(
                 'page' => 'Edit',
                 'title' => 'SIBENG - Edit Data Service',
-                'row' => $service
+                'row' => $product
             );
             $this->template->load('template', 'service/service_form', $data);
         } else {
@@ -52,13 +52,13 @@ class Service extends CI_Controller
     {
         $post = $this->input->post(null, TRUE);
         if (isset($_POST['Tambah'])) {
-            $this->Model_service->add($post);
+            $this->Model_product->add_service($post);
             if ($this->db->affected_rows() > 0) {
                 $this->session->set_flashdata('success', 'Data berhasil disimpan');
             }
             redirect('service');
         } else if (isset($_POST['Edit'])) {
-            $this->Model_service->edit($post);
+            $this->Model_product->edit_service($post);
             if ($this->db->affected_rows() > 0) {
                 $this->session->set_flashdata('success', 'Data berhasil disimpan');
             }
@@ -68,7 +68,7 @@ class Service extends CI_Controller
 
     public function delete($id)
     {
-        $this->Model_service->delete($id);
+        $this->Model_product->delete_service($id);
         if ($this->db->affected_rows() > 0) {
             $this->session->set_flashdata('error', 'Data dihapus');
         }
